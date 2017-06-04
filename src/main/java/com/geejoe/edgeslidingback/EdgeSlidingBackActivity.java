@@ -15,18 +15,13 @@ public class EdgeSlidingBackActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if (enableSlidingBack) {
             EdgeSlidingBackLayout edgeSlidingBackLayout = new EdgeSlidingBackLayout(this);
             edgeSlidingBackLayout.bindActivity(this);
         }
     }
 
-    protected void setEnableSlidingBack(boolean enableSlidingBack){
+    protected void setEnableSlidingBack(boolean enableSlidingBack) {
         this.enableSlidingBack = enableSlidingBack;
     }
 }

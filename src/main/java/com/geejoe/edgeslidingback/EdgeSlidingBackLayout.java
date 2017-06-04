@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Scroller;
 
@@ -56,19 +58,18 @@ public class EdgeSlidingBackLayout extends FrameLayout {
         mTouchAreaWidth = mScreenWidth / 12;
         mTouchSlope = ViewConfiguration.get(context).getScaledTouchSlop();
         mShadow = context.getResources().getDrawable(R.drawable.left_shadow);
-        mShadowWidth = (int)context.getResources().getDisplayMetrics().density*16;
+        mShadowWidth = (int) context.getResources().getDisplayMetrics().density * 16;
     }
 
     public void bindActivity(EdgeSlidingBackActivity activity) {
         this.mActivity = activity;
-        //将EdgeSlidingBackLayout作为最外层布局
-        ViewGroup decorView = (ViewGroup) mActivity.getWindow().getDecorView();
+        //将EdgeSlidingBackLayout作为DecorView的唯一子布局
+        Window window = mActivity.getWindow();
+        ViewGroup decorView = (ViewGroup) window.getDecorView();
         View rootView = decorView.getChildAt(0);
         decorView.removeView(rootView);
         addView(rootView);
         decorView.addView(this);
-//        this.setBackgroundColor(Color.TRANSPARENT);
-//        decorView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public void bindFrgment(EdgeSlidingBackFragment fragment) {
@@ -85,7 +86,7 @@ public class EdgeSlidingBackLayout extends FrameLayout {
             case MotionEvent.ACTION_DOWN:
                 mActionDownX = (int) ev.getX();
                 mLastX = x;
-                mLastY = x;
+                mLastY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
                 int deltaX = x - mLastX;
@@ -147,10 +148,8 @@ public class EdgeSlidingBackLayout extends FrameLayout {
     private void scrollRightOut() {
         int startX = getScrollX();
         int distance = -mScreenWidth - startX;
-
         mScroller.startScroll(startX, 0, distance, 0, 300);
         invalidate();
-        mActivity.finish();
     }
 
     @Override
@@ -158,6 +157,10 @@ public class EdgeSlidingBackLayout extends FrameLayout {
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), 0);
             postInvalidate();
+        } else if (-getScrollX() >= getWidth()) {
+            mActivity.finish();
+            mActivity.overridePendingTransition(R.anim.anim_slide_in, R.anim.anim_slide_out);
+            Log.d("EdgeSlidingBackLayout", "computeScroll()@EdgeSlidingBackLayout.java:161-->>" + mActivity + "销毁");
         }
     }
 

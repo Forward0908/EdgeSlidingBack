@@ -33,10 +33,10 @@ ext {
 
     libraryDescription = 'An Android library help app with edge sliding back like ios'
 
-    siteUrl = 'https://github.com/JoeLeeDreamer/EdgeSlidingBack'
-    gitUrl = 'https://github.com/JoeLeeDreamer/EdgeSlidingBack.git'
+    siteUrl = 'https://github.com/GeeJoe/EdgeSlidingBack'
+    gitUrl = 'https://github.com/GeeJoe/EdgeSlidingBack.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'geejoe'
     developerName = 'GeeJoe'
