@@ -1,6 +1,10 @@
 # EdgeSlidingBack
 An Android library help app with edge sliding back like ios
 
+## v1.0.1
+
+[ ![Download](https://api.bintray.com/packages/geejoe/maven/edgeslidingback/images/download.svg) ](https://bintray.com/geejoe/maven/edgeslidingback/_latestVersion)
+
 ## 简介
 
 这是一个仿ios边缘右滑返回的库，效果见动图：
