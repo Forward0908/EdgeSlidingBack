@@ -7,6 +7,13 @@
         <item name="android:windowAnimationStyle">@style/AppTheme.Slide.Animation</item>
     </style>
 
+    <style name="AppTheme.Slide.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--Required-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.Slide.Animation</item>
+    </style>
+
     <style name="AppTheme.Slide.Animation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/anim_slide_in</item>
         <item name="android:activityOpenExitAnimation">@anim/anim_slide_out</item>
