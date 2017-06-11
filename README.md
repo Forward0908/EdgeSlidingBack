@@ -25,6 +25,8 @@ compile 'com.geejoe:edgeslidingback:1.0.1'
 ## 使用方法
 
 所有需要使用滑动返回的Activity须继承自EdgeSlidingBackActivity
+需要关闭右滑返回可以在Activity的super.onCreate()方法之前执行setEnableSlidingBack(false);
+
 另需要设置主题@style/AppTheme.Slide以便滑动时使下层Activity可见：
 
 例，如下设置：不需要使用滑动返回的Activity（如MainActivity）,则单独设置主题
