@@ -3,9 +3,12 @@ package com.geejoe.edgeslidingback;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.VelocityTrackerCompat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
@@ -35,6 +38,11 @@ public class EdgeSlidingBackLayout extends FrameLayout {
     private int mLastY;
     private int mActionDownX;
 
+    private VelocityTracker vt;
+    private int mPointedId;
+    private float mVelocityX;
+    private float mMinVelocity;
+
     private Drawable mShadow;
     private int mShadowWidth;
 
@@ -53,7 +61,9 @@ public class EdgeSlidingBackLayout extends FrameLayout {
 
     private void init(Context context) {
         mScroller = new Scroller(context);
-        mScreenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        mMinVelocity = (8000 * 440) / dm.densityDpi;
+        mScreenWidth = dm.widthPixels;
         //屏幕宽度的十二分之一作为可滑动返回的操作区域宽度
         mTouchAreaWidth = mScreenWidth / 12;
         mTouchSlope = ViewConfiguration.get(context).getScaledTouchSlop();
@@ -105,14 +115,21 @@ public class EdgeSlidingBackLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (vt == null) {
+            vt = VelocityTracker.obtain();
+        }
+        vt.addMovement(event);
         int x = (int) event.getX();
         int y = (int) event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                mPointedId = event.getPointerId(0);
                 mLastX = x;
                 mLastY = y;
                 break;
             case MotionEvent.ACTION_MOVE:
+                vt.computeCurrentVelocity(1000);
+                mVelocityX = VelocityTrackerCompat.getXVelocity(vt, mPointedId);
                 int deltaX = x - mLastX;
                 int deltaY = y - mLastY;
                 if (mActionDownX < mTouchAreaWidth
@@ -128,10 +145,11 @@ public class EdgeSlidingBackLayout extends FrameLayout {
                 mLastY = y;
                 break;
             case MotionEvent.ACTION_UP:
-                if (-getScrollX() < mScreenWidth / 3) {
-                    scrollResume();
-                } else {
+                Log.d("EdgeSlidingBackLayout", "onTouchEvent()@EdgeSlidingBackLayout.java:144-->>" + "mVelocityX：" + mVelocityX);
+                if (mVelocityX > mMinVelocity || -getScrollX() > mScreenWidth / 3) {
                     scrollRightOut();
+                } else {
+                    scrollResume();
                 }
                 break;
         }

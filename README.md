@@ -1,7 +1,7 @@
 # EdgeSlidingBack
 An Android library help app with edge sliding back like ios
 
-## v1.0.2
+## v1.0.3
 
 [ ![Download](https://api.bintray.com/packages/geejoe/maven/edgeslidingback/images/download.svg) ](https://bintray.com/geejoe/maven/edgeslidingback/_latestVersion)
 
@@ -19,7 +19,7 @@ An Android library help app with edge sliding back like ios
 
 本项目已同步到Jcenter,可直接引用依赖：
 ```Java
-compile 'com.geejoe:edgeslidingback:1.0.2'
+compile 'com.geejoe:edgeslidingback:1.0.3'
 ```
 
 ## 使用方法
@@ -50,6 +50,8 @@ compile 'com.geejoe:edgeslidingback:1.0.2'
     </application>
 ```
 
-## 更多
+## 版本更新
 
-to be continue...
+###
+V1.0.3
+增加速度检测，支持快速滑动返回
