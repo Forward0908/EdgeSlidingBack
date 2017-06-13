@@ -62,7 +62,7 @@ public class EdgeSlidingBackLayout extends FrameLayout {
     private void init(Context context) {
         mScroller = new Scroller(context);
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
-        mMinVelocity = (8000 * 440) / dm.densityDpi;
+        mMinVelocity = (5000 * 440) / dm.densityDpi;
         mScreenWidth = dm.widthPixels;
         //屏幕宽度的十二分之一作为可滑动返回的操作区域宽度
         mTouchAreaWidth = mScreenWidth / 12;
